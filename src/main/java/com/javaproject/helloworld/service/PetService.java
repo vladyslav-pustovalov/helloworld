@@ -26,4 +26,13 @@ public class PetService {
                 .bodyToMono(Pet.class)
                 .block(REQUEST_TIMEOUT);
     }
+
+    public Pet createPet(Pet createdPet) {
+        localApiClient
+                .post()
+                .uri("/pet")
+                .bodyValue(createdPet)
+                .retrieve();
+        return createdPet;
+    }
 }
