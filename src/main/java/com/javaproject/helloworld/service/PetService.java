@@ -28,11 +28,31 @@ public class PetService {
     }
 
     public Pet createPet(Pet createdPet) {
-        localApiClient
+        return localApiClient
                 .post()
                 .uri("/pet")
                 .bodyValue(createdPet)
-                .retrieve();
-        return createdPet;
+                .retrieve()
+                .bodyToMono(Pet.class)
+                .block(REQUEST_TIMEOUT);
+    }
+
+    public Pet updatePet(Pet updatedPet) {
+        return localApiClient
+                .put()
+                .uri("/pet")
+                .bodyValue(updatedPet)
+                .retrieve()
+                .bodyToMono(Pet.class)
+                .block(REQUEST_TIMEOUT);
+    }
+
+    public Pet deletePet(String id) {
+        return localApiClient
+                .delete()
+                .uri("/pet/"+id)
+                .retrieve()
+                .bodyToMono(Pet.class)
+                .block(REQUEST_TIMEOUT);
     }
 }

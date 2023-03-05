@@ -1,14 +1,15 @@
 package com.javaproject.helloworld.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.core.json.JsonReadContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaproject.helloworld.model.Pet;
 import com.javaproject.helloworld.service.PetService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.JsonViewRequestBodyAdvice;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 @RestController
@@ -20,18 +21,22 @@ public class PetController {
     }
 
     @GetMapping("/pet")
-    public String getPetById(String id) {
-        return service.getPet(id).toString();
+    public Pet getPetById(String id) {
+        return service.getPet(id);
     }
 
-//    @PostMapping("/pet")
-//    public String createPetByJSON() throws IOException {
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        Pet pet = objectMapper.readValue(new File("/pet"), Pet.class);
-//        return "redirect:/pet";
-//    }
-    @PostMapping
+    @PostMapping("/pet")
     public Pet createPetByBody(@RequestBody Pet pet) {
         return service.createPet(pet);
+    }
+
+    @PutMapping("/pet")
+    public Pet updatePetByBody (@RequestBody Pet pet) {
+        return service.updatePet(pet);
+    }
+
+    @DeleteMapping("/pet")
+    public Pet deletePetById (String id) {
+        return service.deletePet(id);
     }
 }
