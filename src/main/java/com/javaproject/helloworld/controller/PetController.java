@@ -28,8 +28,9 @@ public class PetController {
 
     @GetMapping("/pet")
     public String getPetById(String id) {
-        String query = "INSERT INTO Categories VALUES (" + service.getPet(id).getCategory().getId().toString() + ", " +
-                service.getPet(id).getCategory().getName().toString() + ");";
+//        String query = "INSERT INTO Categories VALUES (" + service.getPet(id).getCategory().getId().toString() + ", '" +
+//                service.getPet(id).getCategory().getName() + "');";
+        String query = "INSERT INTO Categories VALUES ( 5, 'string');";
         dao.create(query);
         return service.getPet(id).getName() + " added to DB";
     }
